@@ -105,9 +105,10 @@
 
   <div class="toast" id="toast"></div>
 <script>
-  var vcard=["BEGIN:VCARD","VERSION:3.0","N:Hall;Gerald;Mapinduzi;;","FN:Gerald Mapinduzi Hall","ORG:Halltan Vegetable Farm","TITLE:Chief Operations Officer & Senior Olericulturist","TEL;TYPE=CELL,VOICE:+255778650250","TEL;TYPE=WORK,VOICE:+255755660645","EMAIL;TYPE=INTERNET:halltanveggies@gmail.com","ADR;TYPE=WORK:;;Vianzi Ward, Mkuranga;Coast Region;;;Tanzania","URL:https://halltan-farm.netlify.app","NOTE:Drip-irrigated near-organic farm.","END:VCARD"].join("\r\n");
+  var vcard=["BEGIN:VCARD","VERSION:3.0","N:Hall;Gerald;Mapinduzi;;","FN:Gerald Mapinduzi Hall","ORG:Halltan Vegetable Farm","TITLE:Chief Operations Officer & Senior Olericulturist","TEL;TYPE=CELL,VOICE:+255778650250","TEL;TYPE=WORK,VOICE:+255755660645","EMAIL;TYPE=INTERNET:halltanveggies@gmail.com","ADR;TYPE=WORK:;;Vianzi Ward, Mkuranga;Coast Region;;;Tanzania","URL:https://YOUR-USERNAME.github.io/halltan/","NOTE:Drip-irrigated near-organic farm.","END:VCARD"].join("\r\n");
   function toast(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show')},2300);}
-  document.getElementById('saveBtn').addEventListener('click',function(){try{var b=new Blob([vcard],{type:'text/vcard;charset=utf-8'});var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download='Gerald-Hall-Halltan.vcf';document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(u)},1000);toast('Contact downloaded — open it to save');}catch(e){toast('Long-press to save');}});
+  function blobSave(){try{var b=new Blob([vcard],{type:'text/vcard;charset=utf-8'});var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download='Gerald-Hall-Halltan.vcf';document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(u)},1000);toast('Contact downloaded — open it to save');}catch(e){toast('Long-press to save');}}
+  document.getElementById('saveBtn').addEventListener('click',function(){fetch('contact.vcf',{method:'HEAD'}).then(function(r){if(r.ok){toast('Opening contact…');window.location.href='contact.vcf';}else{blobSave();}}).catch(function(){blobSave();});});
 
   var sheet=document.getElementById('sheet'), listView=document.getElementById('listView');
   function showList(){listView.style.display='block';document.querySelectorAll('.detail').forEach(function(d){d.classList.remove('show')});document.querySelector('.panel').scrollTop=0;}
